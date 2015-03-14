@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameOfLifeApplication", "GameOfLifeApplication\GameOfLifeApplication.csproj", "{1B42C10C-9ABA-49F0-A4EF-5A6772B9687B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameOfLifeUnitTests", "UnitTestProject1\GameOfLifeUnitTests.csproj", "{F1BA8E6C-4733-4328-991E-C6AFB36D675C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameOfLifeUnitTests", "GameOfLifeUnitTests\GameOfLifeUnitTests.csproj", "{F1BA8E6C-4733-4328-991E-C6AFB36D675C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -14,12 +14,13 @@ namespace GameOfLifeApplication
     public partial class Form1 : Form
     {
         private World world = null;
-        private int maxIterations = 200;
+        private Image liveCellImg;
 
         public Form1()
         {
             InitializeComponent();
-            
+            // Load image representing live cell
+            liveCellImg = Image.FromFile(@"..\..\assets\live_cell.bmp");
             // Create new instance of the World
             world = new World(10, 10, 50);
         }
@@ -28,9 +29,9 @@ namespace GameOfLifeApplication
         {
             world.Randomise();
             var g = simulationPreviewBox.CreateGraphics();
-            var font = new Font(this.Font.Name, this.Font.Size);
             world.Evolve();
-            g.DrawString(world.ToString(), font, Brushes.Black, 0, 0);
+            Image img = Image.FromFile(@"..\..\assets\live_cell.bmp");
+            g.DrawImage(img, 0, 0, 10, 10);
         }
     }
 }
