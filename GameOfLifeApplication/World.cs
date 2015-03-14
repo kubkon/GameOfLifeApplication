@@ -14,7 +14,6 @@ namespace GameOfLifeApplication
         public readonly int columns;
         public readonly int initLiveCells;
         public readonly CellState[,] grid;
-        public int maxIterations = 200;
 
         List<int[]> survived;
 
