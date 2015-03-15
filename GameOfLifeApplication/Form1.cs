@@ -15,19 +15,17 @@ namespace GameOfLifeApplication
     {
         private World world = null;
         private Image liveCellImg;
-        private Image deadCellImg;
         private Size cellSize;
         private int maxIterations = 200;
         private int rows = 20;
         private int columns = 20;
-        private int initLiveCells = 200;
+        private int initLiveCells = 150;
 
         public Form1()
         {
             InitializeComponent();
             // Load images representing live and dead cell
             liveCellImg = Image.FromFile(@"..\..\assets\live_cell.bmp");
-            deadCellImg = Image.FromFile(@"..\..\assets\dead_cell.bmp");
             cellSize = new Size(10, 10);
             // Create new instance of the World
             world = new World(rows, columns, initLiveCells);
@@ -35,18 +33,20 @@ namespace GameOfLifeApplication
 
         private void drawWorld()
         {
-            var g = simulationPreviewBox.CreateGraphics();
+            var canvas = new Bitmap(rows * cellSize.Width, columns * cellSize.Height);
+            var child = Graphics.FromImage(canvas);
+            child.Clear(Color.White);
             for (int i = 0; i < world.rows; i++)
             {
                 for (int j = 0; j < world.columns; j++)
                 {
-                    var location = new Point(i*cellSize.Height, j*cellSize.Width);
+                    var location = new Point(i * cellSize.Width, j * cellSize.Height);
                     if (world.grid[i, j] == World.State.Live)
-                        g.DrawImage(liveCellImg, new Rectangle(location, cellSize));
-                    else
-                        g.DrawImage(deadCellImg, new Rectangle(location, cellSize));
+                        child.DrawImage(liveCellImg, new Rectangle(location, cellSize));
                 }
             }
+            var master = simulationPreviewBox.CreateGraphics();
+            master.DrawImage(canvas, 0, 0);
         }
 
         private void runSimulationClick(object sender, EventArgs e)
