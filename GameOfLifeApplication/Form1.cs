@@ -18,6 +18,10 @@ namespace GameOfLifeApplication
         private Size cellSize;
         private Image canvas;
         private Graphics graphics;
+
+        private int rows;
+        private int columns;
+        private int initLiveCells;
         private int maxIterations;
 
         public Form1()
@@ -61,20 +65,52 @@ namespace GameOfLifeApplication
             }
         }
 
+        private bool checkAndParseInput()
+        {
+            var maxRows = simulationPreviewBox.Width / 10;
+            if (!Int32.TryParse(rowsTextBox.Text, out rows) || rows == 0 || rows > maxRows)
+            {
+                var msg = String.Format("Number of rows has to be greater than 0 and smaller than {0}.", maxRows);
+                MessageBox.Show(msg);
+                return false;
+            }
+
+            var maxColumns = simulationPreviewBox.Height / 10;
+            if (!Int32.TryParse(columnsTextBox.Text, out columns) || columns == 0 || columns > maxColumns)
+            {
+                var msg = String.Format("Number of columns has to be greater than 0 and smaller than {0}.", maxColumns);
+                MessageBox.Show(msg);
+                return false;
+            }
+
+            var maxInitLiveCells = rows * columns;
+            if (!Int32.TryParse(initCellsTextBox.Text, out initLiveCells)
+                || initLiveCells == 0
+                || initLiveCells > maxInitLiveCells)
+            {
+                var msg = String.Format("Initial number of live cells has to be greater than 0 and smaller than {0}.", maxInitLiveCells);
+                MessageBox.Show(msg);
+                return false;
+            }
+
+            if (!Int32.TryParse(maxIterationsTextBox.Text, out maxIterations) || maxIterations == 0)
+            {
+                var msg = String.Format("Maximum number of iterations has to be greater than 0.");
+                MessageBox.Show(msg);
+                return false;
+            }
+
+            return true;
+        }
+
         private async void runSimulation_Click(object sender, EventArgs e)
         {
-            int rows, columns, initLiveCells;
-            if (!Int32.TryParse(rowsTextBox.Text, out rows))
-                rows = simulationPreviewBox.Width / 10;
-            if (!Int32.TryParse(columnsTextBox.Text, out columns))
-                columns = simulationPreviewBox.Height / 10;
-            if (!Int32.TryParse(initCellsTextBox.Text, out initLiveCells))
-                initLiveCells = (rows * columns) / 2;
-            if (!Int32.TryParse(maxIterationsTextBox.Text, out maxIterations))
-                maxIterations = 200;
-            // Create new instance of the World
-            world = new World(rows, columns, initLiveCells);
-            await Task.Run(() => runSimulation());
+            if (checkAndParseInput())
+            {
+                // Create new instance of the World
+                world = new World(rows, columns, initLiveCells);
+                await Task.Run(() => runSimulation());
+            }
         }
 
         private bool IsNumber(char c)
