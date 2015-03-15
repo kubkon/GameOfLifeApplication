@@ -13,11 +13,11 @@ namespace GameOfLifeUnitTests
         [ClassInitialize]
         public static void ClassInit(TestContext context)
         {
-            world = new World(2, 2, 2);
-            world.Initialise(new List<int[]>() {
+            var initCells = new List<int[]>() {
                 new int[] {0, 0},
                 new int[] {1, 1}
-            });
+            };
+            world = new World(2, 2, 2, initCells: initCells);
         }
 
         [TestMethod]
@@ -38,37 +38,36 @@ namespace GameOfLifeUnitTests
         {
             int x = 0, y = 0;
             var live = world.CountLiveNeighbours(x, y);
-            var future = world.ApplyRules(world.grid[x, y], live);
+            var future = world.ApplyRules(world.Grid[x, y], live);
             Assert.AreEqual(World.State.Dead, future);
             x = 0;
             y = 1;
             live = world.CountLiveNeighbours(x, y);
-            future = world.ApplyRules(world.grid[x, y], live);
+            future = world.ApplyRules(world.Grid[x, y], live);
             Assert.AreEqual(World.State.Dead, future);
         }
 
         [TestMethod]
         public void TestEvolve()
         {
-            var w = new World(4, 4, 2);
-            var liveCells = new List<int[]> () {
+            var initCells = new List<int[]>() {
                 new int[] {0, 1},
                 new int[] {1, 2},
                 new int[] {2, 0},
                 new int[] {2, 1},
                 new int[] {2, 2}
             };
-            w.Initialise(liveCells);
+            var w = new World(4, 4, 2, initCells: initCells);
             for (int i = 0; i < 7; i++)
             {
                 Assert.AreEqual(false, w.Evolve());
             }
             Assert.AreEqual(true, w.Evolve());
-            for (int i = 0; i < w.rows; i++)
+            for (int i = 0; i < w.Rows; i++)
             {
-                for (int j = 0; j < w.columns; j++)
+                for (int j = 0; j < w.Columns; j++)
                 {
-                    var cell = w.grid[i, j];
+                    var cell = w.Grid[i, j];
                     if ((i == 2 || i == 3) && (j == 2 || j == 3))
                         Assert.AreEqual(World.State.Live, cell);
                     else

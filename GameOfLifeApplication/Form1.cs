@@ -14,7 +14,6 @@ namespace GameOfLifeApplication
     public partial class Form1 : Form
     {
         private World world;
-        private Image liveCellImg;
         private Size cellSize;
         private Image canvas;
         private Graphics graphics;
@@ -27,8 +26,6 @@ namespace GameOfLifeApplication
         public Form1()
         {
             InitializeComponent();
-            // Load images representing live cell
-            liveCellImg = Image.FromFile(@"..\..\assets\live_cell.bmp");
             // Specify cell size
             cellSize = new Size(10, 10);
             // Create master canvas
@@ -39,14 +36,11 @@ namespace GameOfLifeApplication
         {
             var child = Graphics.FromImage(canvas);
             child.Clear(Color.White);
-            for (int i = 0; i < world.rows; i++)
+            foreach (var pair in world.Survived)
             {
-                for (int j = 0; j < world.columns; j++)
-                {
-                    var location = new Point(i * cellSize.Width, j * cellSize.Height);
-                    if (world.grid[i, j] == World.State.Live)
-                        child.DrawImage(liveCellImg, new Rectangle(location, cellSize));
-                }
+                var location = new Point(pair[0] * cellSize.Width, pair[1] * cellSize.Height);
+                var rectangle = new Rectangle(location, cellSize);
+                child.FillPie(Brushes.Black, rectangle, 0, 360);
             }
             if (graphics == null)
                 graphics = simulationPreviewBox.CreateGraphics();
@@ -54,15 +48,20 @@ namespace GameOfLifeApplication
             graphics.DrawImage(canvas, 0, 0);
         }
 
-        private async Task runSimulation()
+        private Task<string> runSimulation()
         {
-            world.Randomise();
+            string msg = "Reached maximum iterations limit.";
             for (int i = 0; i < maxIterations; i++)
             {
                 drawWorld();
                 if (world.Evolve())
+                {
+                    msg = "Simulation has reached convergence.";
                     break;
+                }
+                Thread.Sleep(100);
             }
+            return Task.FromResult(msg);
         }
 
         private bool checkAndParseInput()
@@ -109,7 +108,8 @@ namespace GameOfLifeApplication
             {
                 // Create new instance of the World
                 world = new World(rows, columns, initLiveCells);
-                await Task.Run(() => runSimulation());
+                string msg = await Task.Run(() => runSimulation());
+                MessageBox.Show(msg);
             }
         }
 

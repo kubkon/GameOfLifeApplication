@@ -10,95 +10,78 @@ namespace GameOfLifeApplication
     {
         public enum State { Dead = 0, Live = 1 }
 
-        public readonly int rows;
-        public readonly int columns;
-        public readonly int initLiveCells;
-        public readonly State[,] grid;
+        public readonly int Rows;
+        public readonly int Columns;
+        public readonly State[,] Grid;
+        public readonly List<int[]> Survived;
 
-        List<int[]> survived;
-
-        public World(int rows, int columns, int initLiveCells)
+        public World(int rows, int columns, int initLiveCells, List<int[]> initCells = null)
         {
-            this.rows = rows;
-            this.columns = columns;
-            this.initLiveCells = initLiveCells;
-            grid = new State[rows, columns];
-        }
+            Rows = rows;
+            Columns = columns;
+            Grid = new State[rows, columns];
 
-        public void Initialise(List<int[]> liveCells)
-        {
-            // FIX:ME check if indices do not exceed the grid dimensions
-            UpdateGrid(liveCells);
-        }
-
-        public void Randomise()
-        {
-            var rnd = new Random();
-            var seeded = new List<int[]>();
-            for (int i = 0; i < this.initLiveCells; i++)
-            {
-                var m = rnd.Next(rows);
-                var n = rnd.Next(columns);
-                var tuple = new int[] { m, n };
-                if (seeded.Any(x => CompareArrays(tuple, x)))
-                {
-                    i--;
-                    continue;
-                }
-                seeded.Add(tuple);
-            }
-            UpdateGrid(seeded);
+            Survived = new List<int[]>();
+            if (initCells != null)
+                Survived.AddRange(initCells);
+            else
+                Randomise(initLiveCells);
+            UpdateGrid();
         }
 
         public bool Evolve()
         {
-            var survived = new List<int[]>();
-            for (int i = 0; i < rows; i++)
+            var future = new List<int[]>();
+            for (int i = 0; i < Rows; i++)
             {
-                for (int j = 0; j < columns; j++)
+                for (int j = 0; j < Columns; j++)
                 {
-                    var currentCell = grid[i, j];
+                    var currentCell = Grid[i, j];
                     // Count live neighbours of the current cell
                     var liveNeighbours = CountLiveNeighbours(i, j);
                     // Apply rules
                     var result = ApplyRules(currentCell, liveNeighbours);
                     // Save result
                     if (result == State.Live)
-                        survived.Add(new int[] { i, j });
+                        future.Add(new int[] { i, j });
                 }
             }
-            // Update the grid
-            ClearGrid();
-            UpdateGrid(survived);
             // Check if evolution is finished
             var finished = false;
-            if (this.survived != null)
+            if (Survived != null)
             {
-                finished = this.survived.Zip(survived, CompareArrays)
-                                        .All(x => x);
+                finished = Survived.Zip(future, CompareArrays)
+                                   .All(x => x);
             }
-            this.survived = survived;
+            Survived.Clear();
+            Survived.AddRange(future);
+            // Update the grid
+            ClearGrid();
+            UpdateGrid();
+
             return finished;
         }
 
-        public override string ToString()
+        void Randomise(int initLiveCells)
         {
-            var sb = new StringBuilder();
-            for (int i = 0; i < rows; i++)
+            var rnd = new Random();
+            for (int i = 0; i < initLiveCells; i++)
             {
-                for (int j = 0; j < columns; j++)
+                var m = rnd.Next(Rows);
+                var n = rnd.Next(Columns);
+                var tuple = new int[] { m, n };
+                if (Survived.Any(x => CompareArrays(tuple, x)))
                 {
-                    var el = grid[i, j] == State.Live ? "x" : ".";
-                    sb.Append(el);
+                    i--;
+                    continue;
                 }
-                sb.Append("\n");
+                Survived.Add(tuple);
             }
-            return sb.ToString();
         }
 
         internal int CountLiveNeighbours(int x, int y)
         {
-            var neighbours = new List<int>();
+            var neighbours = 0;
             for (int i = -1; i < 2; i++)
             {
                 var k = x + i;
@@ -107,13 +90,13 @@ namespace GameOfLifeApplication
                 {
                     var l = y + j;
 
-                    if (k >= 0 && k < rows && l >= 0 && l < columns && (k != x || l != y))
+                    if (k >= 0 && k < Rows && l >= 0 && l < Columns && (k != x || l != y))
                     {
-                        neighbours.Add((int)grid[k, l]);
+                        neighbours += (int)Grid[k, l];
                     }
                 }
             }
-            return neighbours.Sum();
+            return neighbours;
         }
 
         internal State ApplyRules(State currentCell, int liveNeighbours)
@@ -128,14 +111,14 @@ namespace GameOfLifeApplication
 
         void ClearGrid()
         {
-            Array.Clear(grid, 0, rows * columns);
+            Array.Clear(Grid, 0, Rows * Columns);
         }
 
-        void UpdateGrid(List<int[]> liveCells)
+        void UpdateGrid()
         {
-            foreach (int[] indices in liveCells)
+            foreach (int[] indices in Survived)
             {
-                grid[indices[0], indices[1]] = State.Live;
+                Grid[indices[0], indices[1]] = State.Live;
             }
         }
 
