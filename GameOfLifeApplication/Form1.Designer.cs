@@ -89,6 +89,7 @@
             this.maxIterationsTextBox.Name = "maxIterationsTextBox";
             this.maxIterationsTextBox.Size = new System.Drawing.Size(100, 20);
             this.maxIterationsTextBox.TabIndex = 7;
+            this.maxIterationsTextBox.Text = "200";
             this.maxIterationsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.maxIterationsTextBox_KeyPress);
             // 
             // maxIterationsLabel
@@ -107,6 +108,7 @@
             this.initCellsTextBox.Name = "initCellsTextBox";
             this.initCellsTextBox.Size = new System.Drawing.Size(100, 20);
             this.initCellsTextBox.TabIndex = 5;
+            this.initCellsTextBox.Text = "1000";
             this.initCellsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.initCellsTextBox_KeyPress);
             // 
             // columnsTextBox
@@ -116,6 +118,7 @@
             this.columnsTextBox.Name = "columnsTextBox";
             this.columnsTextBox.Size = new System.Drawing.Size(100, 20);
             this.columnsTextBox.TabIndex = 4;
+            this.columnsTextBox.Text = "50";
             this.columnsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.columnsTextBox_KeyPress);
             // 
             // rowsTextBox
@@ -125,6 +128,7 @@
             this.rowsTextBox.Name = "rowsTextBox";
             this.rowsTextBox.Size = new System.Drawing.Size(100, 20);
             this.rowsTextBox.TabIndex = 3;
+            this.rowsTextBox.Text = "50";
             this.rowsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rowsTextBox_KeyPress);
             // 
             // initCellLabel
@@ -163,7 +167,7 @@
             this.Controls.Add(this.simulationPreviewBox);
             this.Controls.Add(this.runSimulation);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "GameOfLife";
             ((System.ComponentModel.ISupportInitialize)(this.simulationPreviewBox)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

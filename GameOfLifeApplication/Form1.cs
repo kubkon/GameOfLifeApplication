@@ -19,10 +19,10 @@ namespace GameOfLifeApplication
         private Image canvas;
         private Graphics graphics;
 
-        public int maxIterations = 200;
-        public int rows = 50;
-        public int columns = 50;
-        public int initLiveCells = 1000;
+        private int maxIterations;
+        private int rows;
+        private int columns;
+        private int initLiveCells;
 
         public Form1()
         {
@@ -32,9 +32,7 @@ namespace GameOfLifeApplication
             // Specify cell size
             cellSize = new Size(10, 10);
             // Create master canvas
-            canvas = new Bitmap(rows * cellSize.Width, columns * cellSize.Height);
-            // Create new instance of the World
-            world = new World(rows, columns, initLiveCells);
+            canvas = new Bitmap(simulationPreviewBox.Width, simulationPreviewBox.Height);
         }
 
         private void drawWorld()
@@ -52,11 +50,23 @@ namespace GameOfLifeApplication
             }
             if (graphics == null)
                 graphics = simulationPreviewBox.CreateGraphics();
-            graphics.DrawImage(canvas, (simulationPreviewBox.Width - canvas.Width) / 2, (simulationPreviewBox.Height - canvas.Height) / 2);
+            graphics.DrawImage(canvas,
+                               (simulationPreviewBox.Width - rows * cellSize.Width) / 2,
+                               (simulationPreviewBox.Height - columns * cellSize.Height) / 2);
         }
 
         private void runSimulation_Click(object sender, EventArgs e)
         {
+            if (!Int32.TryParse(rowsTextBox.Text, out rows))
+                rows = simulationPreviewBox.Width / 10;
+            if (!Int32.TryParse(columnsTextBox.Text, out columns))
+                columns = simulationPreviewBox.Height / 10;
+            if (!Int32.TryParse(initCellsTextBox.Text, out initLiveCells))
+                initLiveCells = (rows * columns) / 2;
+            if (!Int32.TryParse(maxIterationsTextBox.Text, out maxIterations))
+                maxIterations = 200;
+            // Create new instance of the World
+            world = new World(rows, columns, initLiveCells);
             world.Randomise();
             for (int i = 0; i < maxIterations; i++)
             {
