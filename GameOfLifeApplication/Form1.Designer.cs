@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.runSimulation = new System.Windows.Forms.Button();
+            this.runSimulationButton = new System.Windows.Forms.Button();
             this.simulationPreviewBox = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.maxIterationsTextBox = new System.Windows.Forms.TextBox();
@@ -43,16 +43,16 @@
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // runSimulation
+            // runSimulationButton
             // 
-            this.runSimulation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.runSimulation.Location = new System.Drawing.Point(586, 477);
-            this.runSimulation.Name = "runSimulation";
-            this.runSimulation.Size = new System.Drawing.Size(100, 35);
-            this.runSimulation.TabIndex = 0;
-            this.runSimulation.Text = "Run simulation";
-            this.runSimulation.UseVisualStyleBackColor = true;
-            this.runSimulation.Click += new System.EventHandler(this.runSimulation_Click);
+            this.runSimulationButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.runSimulationButton.Location = new System.Drawing.Point(586, 477);
+            this.runSimulationButton.Name = "runSimulationButton";
+            this.runSimulationButton.Size = new System.Drawing.Size(100, 35);
+            this.runSimulationButton.TabIndex = 0;
+            this.runSimulationButton.Text = "Run simulation";
+            this.runSimulationButton.UseVisualStyleBackColor = true;
+            this.runSimulationButton.Click += new System.EventHandler(this.runSimulation_Click);
             // 
             // simulationPreviewBox
             // 
@@ -165,7 +165,7 @@
             this.ClientSize = new System.Drawing.Size(749, 522);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.simulationPreviewBox);
-            this.Controls.Add(this.runSimulation);
+            this.Controls.Add(this.runSimulationButton);
             this.Name = "Form1";
             this.Text = "GameOfLife";
             ((System.ComponentModel.ISupportInitialize)(this.simulationPreviewBox)).EndInit();
@@ -178,7 +178,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button runSimulation;
+        private System.Windows.Forms.Button runSimulationButton;
         private System.Windows.Forms.PictureBox simulationPreviewBox;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox initCellsTextBox;

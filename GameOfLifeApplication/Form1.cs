@@ -55,7 +55,18 @@ namespace GameOfLifeApplication
                                (simulationPreviewBox.Height - columns * cellSize.Height) / 2);
         }
 
-        private void runSimulation_Click(object sender, EventArgs e)
+        private async Task runSimulation()
+        {
+            world.Randomise();
+            for (int i = 0; i < maxIterations; i++)
+            {
+                drawWorld();
+                if (world.Evolve())
+                    break;
+            }
+        }
+
+        private async void runSimulation_Click(object sender, EventArgs e)
         {
             if (!Int32.TryParse(rowsTextBox.Text, out rows))
                 rows = simulationPreviewBox.Width / 10;
@@ -67,13 +78,7 @@ namespace GameOfLifeApplication
                 maxIterations = 200;
             // Create new instance of the World
             world = new World(rows, columns, initLiveCells);
-            world.Randomise();
-            for (int i = 0; i < maxIterations; i++)
-            {
-                drawWorld();
-                if (world.Evolve())
-                    break;
-            }
+            await Task.Run(() => runSimulation());
         }
 
         private bool IsNumber(char c)
