@@ -113,33 +113,18 @@ namespace GameOfLifeApplication
             }
         }
 
-        private bool IsNumber(char c)
+        private void CheckKeys(object sender, KeyPressEventArgs e)
         {
-            return !(char.IsLetter(c) || char.IsSymbol(c) || char.IsWhiteSpace(c) || char.IsPunctuation(c));
+            if (e.KeyChar == (char)13)
+                runSimulation_Click(sender, e);
+            else
+            {
+                if (char.IsLetter(e.KeyChar) ||
+                    char.IsSymbol(e.KeyChar) ||
+                    char.IsWhiteSpace(e.KeyChar) ||
+                    char.IsPunctuation(e.KeyChar))
+                    e.Handled = true;
+            }
         }
-
-        private void rowsTextBox_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!IsNumber(e.KeyChar))
-                e.Handled = true;
-        }
-
-        private void columnsTextBox_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!IsNumber(e.KeyChar))
-                e.Handled = true;
-        }
-
-        private void initCellsTextBox_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!IsNumber(e.KeyChar))
-                e.Handled = true;
-        }
-
-        private void maxIterationsTextBox_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!IsNumber(e.KeyChar))
-                e.Handled = true;
-        } 
     }
 }
