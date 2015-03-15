@@ -50,7 +50,7 @@ namespace GameOfLifeApplication
 
         private Task<string> runSimulation()
         {
-            string msg = "Reached maximum iterations limit.";
+            string msg = "Reached maximum iteration limit.";
             for (int i = 0; i < maxIterations; i++)
             {
                 drawWorld();
