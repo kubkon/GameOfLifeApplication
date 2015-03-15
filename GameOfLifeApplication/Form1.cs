@@ -16,7 +16,11 @@ namespace GameOfLifeApplication
         private World world = null;
         private Image liveCellImg;
         private Image deadCellImg;
+        private Size cellSize;
         private int maxIterations = 200;
+        private int rows = 20;
+        private int columns = 20;
+        private int initLiveCells = 200;
 
         public Form1()
         {
@@ -24,23 +28,23 @@ namespace GameOfLifeApplication
             // Load images representing live and dead cell
             liveCellImg = Image.FromFile(@"..\..\assets\live_cell.bmp");
             deadCellImg = Image.FromFile(@"..\..\assets\dead_cell.bmp");
+            cellSize = new Size(10, 10);
             // Create new instance of the World
-            world = new World(10, 10, 50);
+            world = new World(rows, columns, initLiveCells);
         }
 
         private void drawWorld()
         {
             var g = simulationPreviewBox.CreateGraphics();
-            var size = new Size(10, 10);
             for (int i = 0; i < world.rows; i++)
             {
                 for (int j = 0; j < world.columns; j++)
                 {
-                    var location = new Point(i*10, j*10);
+                    var location = new Point(i*cellSize.Height, j*cellSize.Width);
                     if (world.grid[i, j] == World.State.Live)
-                        g.DrawImage(liveCellImg, new Rectangle(location, size));
+                        g.DrawImage(liveCellImg, new Rectangle(location, cellSize));
                     else
-                        g.DrawImage(deadCellImg, new Rectangle(location, size));
+                        g.DrawImage(deadCellImg, new Rectangle(location, cellSize));
                 }
             }
         }
