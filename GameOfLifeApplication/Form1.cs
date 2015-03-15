@@ -20,9 +20,9 @@ namespace GameOfLifeApplication
         private Graphics graphics;
 
         public int maxIterations = 200;
-        public int rows = 20;
-        public int columns = 20;
-        public int initLiveCells = 150;
+        public int rows = 50;
+        public int columns = 50;
+        public int initLiveCells = 1000;
 
         public Form1()
         {
@@ -52,7 +52,7 @@ namespace GameOfLifeApplication
             }
             if (graphics == null)
                 graphics = simulationPreviewBox.CreateGraphics();
-            graphics.DrawImage(canvas, 0, 0);
+            graphics.DrawImage(canvas, (simulationPreviewBox.Width - canvas.Width) / 2, (simulationPreviewBox.Height - canvas.Height) / 2);
         }
 
         private void runSimulationClick(object sender, EventArgs e)
