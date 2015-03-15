@@ -18,11 +18,7 @@ namespace GameOfLifeApplication
         private Size cellSize;
         private Image canvas;
         private Graphics graphics;
-
         private int maxIterations;
-        private int rows;
-        private int columns;
-        private int initLiveCells;
 
         public Form1()
         {
@@ -50,9 +46,8 @@ namespace GameOfLifeApplication
             }
             if (graphics == null)
                 graphics = simulationPreviewBox.CreateGraphics();
-            graphics.DrawImage(canvas,
-                               (simulationPreviewBox.Width - rows * cellSize.Width) / 2,
-                               (simulationPreviewBox.Height - columns * cellSize.Height) / 2);
+            // FIX:ME if size of the world smaller than max, draw in the centre of the picture box
+            graphics.DrawImage(canvas, 0, 0);
         }
 
         private async Task runSimulation()
@@ -68,6 +63,7 @@ namespace GameOfLifeApplication
 
         private async void runSimulation_Click(object sender, EventArgs e)
         {
+            int rows, columns, initLiveCells;
             if (!Int32.TryParse(rowsTextBox.Text, out rows))
                 rows = simulationPreviewBox.Width / 10;
             if (!Int32.TryParse(columnsTextBox.Text, out columns))
