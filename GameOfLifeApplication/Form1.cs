@@ -13,27 +13,32 @@ namespace GameOfLifeApplication
 {
     public partial class Form1 : Form
     {
-        private World world = null;
+        private World world;
         private Image liveCellImg;
         private Size cellSize;
-        private int maxIterations = 200;
-        private int rows = 20;
-        private int columns = 20;
-        private int initLiveCells = 150;
+        private Image canvas;
+        private Graphics graphics;
+
+        public int maxIterations = 200;
+        public int rows = 20;
+        public int columns = 20;
+        public int initLiveCells = 150;
 
         public Form1()
         {
             InitializeComponent();
-            // Load images representing live and dead cell
+            // Load images representing live cell
             liveCellImg = Image.FromFile(@"..\..\assets\live_cell.bmp");
+            // Specify cell size
             cellSize = new Size(10, 10);
+            // Create master canvas
+            canvas = new Bitmap(rows * cellSize.Width, columns * cellSize.Height);
             // Create new instance of the World
             world = new World(rows, columns, initLiveCells);
         }
 
         private void drawWorld()
         {
-            var canvas = new Bitmap(rows * cellSize.Width, columns * cellSize.Height);
             var child = Graphics.FromImage(canvas);
             child.Clear(Color.White);
             for (int i = 0; i < world.rows; i++)
@@ -45,8 +50,9 @@ namespace GameOfLifeApplication
                         child.DrawImage(liveCellImg, new Rectangle(location, cellSize));
                 }
             }
-            var master = simulationPreviewBox.CreateGraphics();
-            master.DrawImage(canvas, 0, 0);
+            if (graphics == null)
+                graphics = simulationPreviewBox.CreateGraphics();
+            graphics.DrawImage(canvas, 0, 0);
         }
 
         private void runSimulationClick(object sender, EventArgs e)
