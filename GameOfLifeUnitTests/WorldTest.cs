@@ -39,12 +39,12 @@ namespace GameOfLifeUnitTests
             int x = 0, y = 0;
             var live = world.CountLiveNeighbours(x, y);
             var future = world.ApplyRules(world.grid[x, y], live);
-            Assert.AreEqual(World.CellState.Dead, future);
+            Assert.AreEqual(World.State.Dead, future);
             x = 0;
             y = 1;
             live = world.CountLiveNeighbours(x, y);
             future = world.ApplyRules(world.grid[x, y], live);
-            Assert.AreEqual(World.CellState.Dead, future);
+            Assert.AreEqual(World.State.Dead, future);
         }
 
         [TestMethod]
@@ -70,9 +70,9 @@ namespace GameOfLifeUnitTests
                 {
                     var cell = w.grid[i, j];
                     if ((i == 2 || i == 3) && (j == 2 || j == 3))
-                        Assert.AreEqual(World.CellState.Live, cell);
+                        Assert.AreEqual(World.State.Live, cell);
                     else
-                        Assert.AreEqual(World.CellState.Dead, cell);
+                        Assert.AreEqual(World.State.Dead, cell);
                 }
             }
         }

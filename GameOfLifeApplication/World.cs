@@ -8,12 +8,12 @@ namespace GameOfLifeApplication
 {
     public class World
     {
-        public enum CellState { Dead = 0, Live = 1 }
+        public enum State { Dead = 0, Live = 1 }
 
         public readonly int rows;
         public readonly int columns;
         public readonly int initLiveCells;
-        public readonly CellState[,] grid;
+        public readonly State[,] grid;
 
         List<int[]> survived;
 
@@ -22,7 +22,7 @@ namespace GameOfLifeApplication
             this.rows = rows;
             this.columns = columns;
             this.initLiveCells = initLiveCells;
-            grid = new CellState[rows, columns];
+            grid = new State[rows, columns];
         }
 
         public void Initialise(List<int[]> liveCells)
@@ -63,7 +63,7 @@ namespace GameOfLifeApplication
                     // Apply rules
                     var result = ApplyRules(currentCell, liveNeighbours);
                     // Save result
-                    if (result == CellState.Live)
+                    if (result == State.Live)
                         survived.Add(new int[] { i, j });
                 }
             }
@@ -88,7 +88,7 @@ namespace GameOfLifeApplication
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    var el = grid[i, j] == CellState.Live ? "x" : ".";
+                    var el = grid[i, j] == State.Live ? "x" : ".";
                     sb.Append(el);
                 }
                 sb.Append("\n");
@@ -116,12 +116,12 @@ namespace GameOfLifeApplication
             return neighbours.Sum();
         }
 
-        internal CellState ApplyRules(CellState currentCell, int liveNeighbours)
+        internal State ApplyRules(State currentCell, int liveNeighbours)
         {
-            var result = CellState.Dead;
-            if ((currentCell == CellState.Live && liveNeighbours == 2) || liveNeighbours == 3)
+            var result = State.Dead;
+            if ((currentCell == State.Live && liveNeighbours == 2) || liveNeighbours == 3)
             {
-                result = CellState.Live;
+                result = State.Live;
             }
             return result;
         }
@@ -135,7 +135,7 @@ namespace GameOfLifeApplication
         {
             foreach (int[] indices in liveCells)
             {
-                grid[indices[0], indices[1]] = CellState.Live;
+                grid[indices[0], indices[1]] = State.Live;
             }
         }
 
