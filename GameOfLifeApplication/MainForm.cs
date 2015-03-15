@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace GameOfLifeApplication
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private World world;
         private Size cellSize;
@@ -23,7 +23,7 @@ namespace GameOfLifeApplication
         private int initLiveCells;
         private int maxIterations;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             // Specify cell size
