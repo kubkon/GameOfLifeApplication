@@ -31,14 +31,14 @@
             this.runSimulation = new System.Windows.Forms.Button();
             this.simulationPreviewBox = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rowsLabel = new System.Windows.Forms.Label();
-            this.columnsLabel = new System.Windows.Forms.Label();
-            this.initCellLabel = new System.Windows.Forms.Label();
-            this.rowsTextBox = new System.Windows.Forms.TextBox();
-            this.columnsTextBox = new System.Windows.Forms.TextBox();
-            this.initCellsTextBox = new System.Windows.Forms.TextBox();
-            this.maxIterationsLabel = new System.Windows.Forms.Label();
             this.maxIterationsTextBox = new System.Windows.Forms.TextBox();
+            this.maxIterationsLabel = new System.Windows.Forms.Label();
+            this.initCellsTextBox = new System.Windows.Forms.TextBox();
+            this.columnsTextBox = new System.Windows.Forms.TextBox();
+            this.rowsTextBox = new System.Windows.Forms.TextBox();
+            this.initCellLabel = new System.Windows.Forms.Label();
+            this.columnsLabel = new System.Windows.Forms.Label();
+            this.rowsLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.simulationPreviewBox)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -52,7 +52,7 @@
             this.runSimulation.TabIndex = 0;
             this.runSimulation.Text = "Run simulation";
             this.runSimulation.UseVisualStyleBackColor = true;
-            this.runSimulation.Click += new System.EventHandler(this.runSimulationClick);
+            this.runSimulation.Click += new System.EventHandler(this.runSimulation_Click);
             // 
             // simulationPreviewBox
             // 
@@ -82,56 +82,14 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Simulation parameters";
             // 
-            // rowsLabel
+            // maxIterationsTextBox
             // 
-            this.rowsLabel.AutoSize = true;
-            this.rowsLabel.Location = new System.Drawing.Point(42, 37);
-            this.rowsLabel.Name = "rowsLabel";
-            this.rowsLabel.Size = new System.Drawing.Size(37, 13);
-            this.rowsLabel.TabIndex = 0;
-            this.rowsLabel.Text = "Rows:";
-            // 
-            // columnsLabel
-            // 
-            this.columnsLabel.AutoSize = true;
-            this.columnsLabel.Location = new System.Drawing.Point(29, 74);
-            this.columnsLabel.Name = "columnsLabel";
-            this.columnsLabel.Size = new System.Drawing.Size(50, 13);
-            this.columnsLabel.TabIndex = 1;
-            this.columnsLabel.Text = "Columns:";
-            // 
-            // initCellLabel
-            // 
-            this.initCellLabel.AutoSize = true;
-            this.initCellLabel.Location = new System.Drawing.Point(33, 112);
-            this.initCellLabel.Name = "initCellLabel";
-            this.initCellLabel.Size = new System.Drawing.Size(46, 13);
-            this.initCellLabel.TabIndex = 2;
-            this.initCellLabel.Text = "InitCells:";
-            // 
-            // rowsTextBox
-            // 
-            this.rowsTextBox.Location = new System.Drawing.Point(85, 34);
-            this.rowsTextBox.MaxLength = 10;
-            this.rowsTextBox.Name = "rowsTextBox";
-            this.rowsTextBox.Size = new System.Drawing.Size(100, 20);
-            this.rowsTextBox.TabIndex = 3;
-            // 
-            // columnsTextBox
-            // 
-            this.columnsTextBox.Location = new System.Drawing.Point(85, 71);
-            this.columnsTextBox.MaxLength = 10;
-            this.columnsTextBox.Name = "columnsTextBox";
-            this.columnsTextBox.Size = new System.Drawing.Size(100, 20);
-            this.columnsTextBox.TabIndex = 4;
-            // 
-            // initCellsTextBox
-            // 
-            this.initCellsTextBox.Location = new System.Drawing.Point(85, 109);
-            this.initCellsTextBox.MaxLength = 10;
-            this.initCellsTextBox.Name = "initCellsTextBox";
-            this.initCellsTextBox.Size = new System.Drawing.Size(100, 20);
-            this.initCellsTextBox.TabIndex = 5;
+            this.maxIterationsTextBox.Location = new System.Drawing.Point(85, 146);
+            this.maxIterationsTextBox.MaxLength = 10;
+            this.maxIterationsTextBox.Name = "maxIterationsTextBox";
+            this.maxIterationsTextBox.Size = new System.Drawing.Size(100, 20);
+            this.maxIterationsTextBox.TabIndex = 7;
+            this.maxIterationsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.maxIterationsTextBox_KeyPress);
             // 
             // maxIterationsLabel
             // 
@@ -142,13 +100,59 @@
             this.maxIterationsLabel.TabIndex = 6;
             this.maxIterationsLabel.Text = "MaxIterations:";
             // 
-            // maxIterationsTextBox
+            // initCellsTextBox
             // 
-            this.maxIterationsTextBox.Location = new System.Drawing.Point(85, 146);
-            this.maxIterationsTextBox.MaxLength = 10;
-            this.maxIterationsTextBox.Name = "maxIterationsTextBox";
-            this.maxIterationsTextBox.Size = new System.Drawing.Size(100, 20);
-            this.maxIterationsTextBox.TabIndex = 7;
+            this.initCellsTextBox.Location = new System.Drawing.Point(85, 109);
+            this.initCellsTextBox.MaxLength = 10;
+            this.initCellsTextBox.Name = "initCellsTextBox";
+            this.initCellsTextBox.Size = new System.Drawing.Size(100, 20);
+            this.initCellsTextBox.TabIndex = 5;
+            this.initCellsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.initCellsTextBox_KeyPress);
+            // 
+            // columnsTextBox
+            // 
+            this.columnsTextBox.Location = new System.Drawing.Point(85, 71);
+            this.columnsTextBox.MaxLength = 10;
+            this.columnsTextBox.Name = "columnsTextBox";
+            this.columnsTextBox.Size = new System.Drawing.Size(100, 20);
+            this.columnsTextBox.TabIndex = 4;
+            this.columnsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.columnsTextBox_KeyPress);
+            // 
+            // rowsTextBox
+            // 
+            this.rowsTextBox.Location = new System.Drawing.Point(85, 34);
+            this.rowsTextBox.MaxLength = 10;
+            this.rowsTextBox.Name = "rowsTextBox";
+            this.rowsTextBox.Size = new System.Drawing.Size(100, 20);
+            this.rowsTextBox.TabIndex = 3;
+            this.rowsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rowsTextBox_KeyPress);
+            // 
+            // initCellLabel
+            // 
+            this.initCellLabel.AutoSize = true;
+            this.initCellLabel.Location = new System.Drawing.Point(33, 112);
+            this.initCellLabel.Name = "initCellLabel";
+            this.initCellLabel.Size = new System.Drawing.Size(46, 13);
+            this.initCellLabel.TabIndex = 2;
+            this.initCellLabel.Text = "InitCells:";
+            // 
+            // columnsLabel
+            // 
+            this.columnsLabel.AutoSize = true;
+            this.columnsLabel.Location = new System.Drawing.Point(29, 74);
+            this.columnsLabel.Name = "columnsLabel";
+            this.columnsLabel.Size = new System.Drawing.Size(50, 13);
+            this.columnsLabel.TabIndex = 1;
+            this.columnsLabel.Text = "Columns:";
+            // 
+            // rowsLabel
+            // 
+            this.rowsLabel.AutoSize = true;
+            this.rowsLabel.Location = new System.Drawing.Point(42, 37);
+            this.rowsLabel.Name = "rowsLabel";
+            this.rowsLabel.Size = new System.Drawing.Size(37, 13);
+            this.rowsLabel.TabIndex = 0;
+            this.rowsLabel.Text = "Rows:";
             // 
             // Form1
             // 

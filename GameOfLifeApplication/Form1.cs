@@ -55,7 +55,7 @@ namespace GameOfLifeApplication
             graphics.DrawImage(canvas, (simulationPreviewBox.Width - canvas.Width) / 2, (simulationPreviewBox.Height - canvas.Height) / 2);
         }
 
-        private void runSimulationClick(object sender, EventArgs e)
+        private void runSimulation_Click(object sender, EventArgs e)
         {
             world.Randomise();
             for (int i = 0; i < maxIterations; i++)
@@ -65,5 +65,34 @@ namespace GameOfLifeApplication
                     break;
             }
         }
+
+        private bool IsNumber(char c)
+        {
+            return !(char.IsLetter(c) || char.IsSymbol(c) || char.IsWhiteSpace(c) || char.IsPunctuation(c));
+        }
+
+        private void rowsTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!IsNumber(e.KeyChar))
+                e.Handled = true;
+        }
+
+        private void columnsTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!IsNumber(e.KeyChar))
+                e.Handled = true;
+        }
+
+        private void initCellsTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!IsNumber(e.KeyChar))
+                e.Handled = true;
+        }
+
+        private void maxIterationsTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!IsNumber(e.KeyChar))
+                e.Handled = true;
+        } 
     }
 }
